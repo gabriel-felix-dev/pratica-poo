@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "exercicio-07", "exercicio-07\exercicio-07.csproj", "{14899A81-8C67-3414-D484-E1EE61C37FE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "biblioteca-leia-mais", "biblioteca-leia-mais\biblioteca-leia-mais.csproj", "{6A2ABD0B-C633-6472-A3E6-7F50AC66325D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,15 +10,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{14899A81-8C67-3414-D484-E1EE61C37FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14899A81-8C67-3414-D484-E1EE61C37FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14899A81-8C67-3414-D484-E1EE61C37FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14899A81-8C67-3414-D484-E1EE61C37FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A2ABD0B-C633-6472-A3E6-7F50AC66325D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A2ABD0B-C633-6472-A3E6-7F50AC66325D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A2ABD0B-C633-6472-A3E6-7F50AC66325D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A2ABD0B-C633-6472-A3E6-7F50AC66325D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BA60E188-0380-4711-B136-C1F8B09A4A47}
+		SolutionGuid = {B87CA676-8C1C-486C-ABA8-091B609E3550}
 	EndGlobalSection
 EndGlobal

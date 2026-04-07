@@ -1,0 +1,15 @@
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\bin\Debug\net10.0\biblioteca-leia-mais.exe
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\bin\Debug\net10.0\biblioteca-leia-mais.deps.json
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\bin\Debug\net10.0\biblioteca-leia-mais.runtimeconfig.json
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\bin\Debug\net10.0\biblioteca-leia-mais.dll
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\bin\Debug\net10.0\biblioteca-leia-mais.pdb
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.AssemblyInfoInputs.cache
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.AssemblyInfo.cs
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.csproj.CoreCompileInputs.cache
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.sourcelink.json
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.dll
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\refint\biblioteca-leia-mais.dll
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.pdb
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\biblioteca-leia-mais.genruntimeconfig.cache
+D:\Dev-Repo\pratica-poo\biblioteca-leia-mais\obj\Debug\net10.0\ref\biblioteca-leia-mais.dll
