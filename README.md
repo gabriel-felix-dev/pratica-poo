@@ -31,4 +31,3 @@ O sistema deve gerenciar Livros, Usuários e Empréstimos. Como ainda não há b
 - Um Livro nunca pode ser excluído do sistema se ele estiver com o status Emprestado.
 
 - Um Usuário só pode ser removido se não possuir nenhum livro pendente de devolução.
-tenta fazer essa regra ai
