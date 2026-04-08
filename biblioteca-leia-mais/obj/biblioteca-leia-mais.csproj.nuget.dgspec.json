@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dev-Repo\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj": {}
+    "C:\\Repositorios-Gabriel\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj": {}
   },
   "projects": {
-    "D:\\Dev-Repo\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj": {
+    "C:\\Repositorios-Gabriel\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev-Repo\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj",
+        "projectUniqueName": "C:\\Repositorios-Gabriel\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj",
         "projectName": "biblioteca-leia-mais",
-        "projectPath": "D:\\Dev-Repo\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj",
+        "projectPath": "C:\\Repositorios-Gabriel\\pratica-poo\\biblioteca-leia-mais\\biblioteca-leia-mais.csproj",
         "packagesPath": "C:\\Users\\Gabriel\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev-Repo\\pratica-poo\\biblioteca-leia-mais\\obj\\",
+        "outputPath": "C:\\Repositorios-Gabriel\\pratica-poo\\biblioteca-leia-mais\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Gabriel\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Gabriel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

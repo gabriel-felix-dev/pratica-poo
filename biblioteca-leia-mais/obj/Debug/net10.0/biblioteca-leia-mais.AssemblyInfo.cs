@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("biblioteca-leia-mais")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9ff961173dd18acdc35a57a4f80ee93d836c3bfc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7a4edb0209e52ec8c750eadc78a33684f0c2a45")]
 [assembly: System.Reflection.AssemblyProductAttribute("biblioteca-leia-mais")]
 [assembly: System.Reflection.AssemblyTitleAttribute("biblioteca-leia-mais")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
