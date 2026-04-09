@@ -10,9 +10,11 @@ public class Usuario
         PerfilAcesso = perfilAcesso;
         Nome = nome;
         Email = email;
-
         Senha = GerarSenhaAleatoria();
     }
+
+    // ### => Pesquisar sobre enumerable e seu métodos - Exemplo: Count, Contains, Any
+    // ### => Pesquisar sobre Guid
 
     // Encapsulamento: O encapsulamente garante que modificadores de acesso não alterem os atributos de uma classe diretamente.
     //      |=> Com isso podemos garantir a segurança dos atributos da classe
@@ -31,6 +33,17 @@ public class Usuario
         DataNascimento = dataNascimento;
     }
 
+    public void AlterarSenha(string novaSenha)
+    {
+        if (string.IsNullOrEmpty(novaSenha) || novaSenha.Length < 6)
+        {
+            Console.WriteLine("A senha deve conter pelo menos 6 caracteres.");
+            return;
+        }
+
+        Senha = novaSenha;
+    }
+
     public override string ToString()
     {
         return $" Nome: {Nome}, Email: {Email}";
@@ -38,14 +51,10 @@ public class Usuario
 
     private string GerarSenhaAleatoria()
     {
-        var random = new Random();
-        var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var senha = new char[8];
+        Guid guidSenha = Guid.NewGuid(); // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
+        string senhaAleatoria = guidSenha.ToString().Substring(1, 7);
 
-        for (int i = 0; i < senha.Length; i++)
-            senha[i] = caracteres[random.Next(caracteres.Length)];
-
-        return new string(senha);
+        return senhaAleatoria + Id.ToString();
     }
 
 }
