@@ -11,17 +11,11 @@ public class Usuario
         Nome = nome;
         Email = email;
         Senha = GerarSenhaAleatoria();
-    }
+    }    
 
-    // ### => Pesquisar sobre enumerable e seu métodos - Exemplo: Count, Contains, Any
-    // ### => Pesquisar sobre Guid
-
-    // Encapsulamento: O encapsulamente garante que modificadores de acesso não alterem os atributos de uma classe diretamente.
-    //      |=> Com isso podemos garantir a segurança dos atributos da classe
-
-    public int Id { get; } // Propriedade somente de leitura. Ela só pode ser preenchida a partir do construtor
+    public int Id { get; }
     public PerfilAcessoEnum PerfilAcesso { get; }
-    public string Nome { get; private set; } // Propriedades com private set só podem ser alteradas dentro da classe. Fora dela só pode ser feito com métodos.
+    public string Nome { get; private set; } 
     public string Email { get; private set; }
     public DateTime DataNascimento { get; private set; }
     public string Senha { get; private set; }
