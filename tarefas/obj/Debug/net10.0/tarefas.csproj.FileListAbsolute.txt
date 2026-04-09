@@ -1,0 +1,15 @@
+C:\Repositorios-Gabriel\pratica-poo\tarefas\bin\Debug\net10.0\tarefas.exe
+C:\Repositorios-Gabriel\pratica-poo\tarefas\bin\Debug\net10.0\tarefas.deps.json
+C:\Repositorios-Gabriel\pratica-poo\tarefas\bin\Debug\net10.0\tarefas.runtimeconfig.json
+C:\Repositorios-Gabriel\pratica-poo\tarefas\bin\Debug\net10.0\tarefas.dll
+C:\Repositorios-Gabriel\pratica-poo\tarefas\bin\Debug\net10.0\tarefas.pdb
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.AssemblyInfoInputs.cache
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.AssemblyInfo.cs
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.csproj.CoreCompileInputs.cache
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.sourcelink.json
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.dll
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\refint\tarefas.dll
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.pdb
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\tarefas.genruntimeconfig.cache
+C:\Repositorios-Gabriel\pratica-poo\tarefas\obj\Debug\net10.0\ref\tarefas.dll
