@@ -22,4 +22,9 @@ public class LivroService // a service pode criar um obj
         _livroRepository.AdicionarLivro(livro); // Para poder acessar o Repository é necessário instanciar ele. 
                                                 // Ele é instanciado na Program
     }
+
+    public List<Livro> ImprimeLivros()
+    {
+        return _livroRepository.MostraLivros();
+    }
 }
