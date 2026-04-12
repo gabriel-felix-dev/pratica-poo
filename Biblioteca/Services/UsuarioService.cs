@@ -1,3 +1,4 @@
+using biblioteca.DTO;
 using Biblioteca.Models;
 using Biblioteca.Repositories;
 
@@ -5,13 +6,17 @@ namespace Biblioteca.Services;
 
 public class UsuarioService
 {
+    public UsuarioService(UsuarioRepository usuarioRepository)
+    {
+        _usuarioRepository = usuarioRepository;
+    }
 
     private UsuarioRepository _usuarioRepository;
 
-    public List<Usuario> PegaUsuario(int id)
+    public void CadastrarUsuario(UsuarioDTO dto)
     {
-        int posicaoUsuario = _usuarioRepository.MostraUsuarios().IndexOf(id);
-        
-        return _usuarioRepository.
+        Usuario usuario = new Usuario(dto.NomeUsuario, dto.EmailUsuario, dto.TelefoneUsuario);
+
+        _usuarioRepository.AdicionarUsuario(usuario);
     }
 }
