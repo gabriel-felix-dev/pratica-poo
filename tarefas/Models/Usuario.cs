@@ -4,21 +4,24 @@ namespace tarefas.Models;
 
 public class Usuario
 {
-    public Usuario(int id, PerfilAcessoEnum perfilAcesso, string nome, string email)
+    public Usuario(PerfilAcessoEnum perfilAcesso, string nome, string email)
     {
-        Id = id;
+        Id = Guid.NewGuid().ToString();
         PerfilAcesso = perfilAcesso;
         Nome = nome;
         Email = email;
         Senha = GerarSenhaAleatoria();
-    }    
+        Colaborador = new Colaborador(idUsuario: Id);
+    }
 
-    public int Id { get; }
+    public string Id { get; }
     public PerfilAcessoEnum PerfilAcesso { get; }
-    public string Nome { get; private set; } 
+    public string Nome { get; private set; }
     public string Email { get; private set; }
     public DateTime DataNascimento { get; private set; }
     public string Senha { get; private set; }
+
+    public Colaborador Colaborador { get; private set; }
 
     public void AlterarDadosCadastrais(string nome, DateTime dataNascimento, string email)
     {
@@ -40,15 +43,21 @@ public class Usuario
 
     public override string ToString()
     {
-        return $" Nome: {Nome}, Email: {Email}";
+        string textoApresentacao = string.IsNullOrEmpty(Colaborador.IdSuperior)
+            ? $" Id: {Id}, Nome: {Nome}, Email: {Email}"
+            : $" Id: {Id}, Nome: {Nome}, Email: {Email}, Código Superior {Colaborador.ObterCodigoGerenteResponsavelFormatado()}";
+
+        return textoApresentacao;
     }
+
+    public void DefinirSuperiorDiretoDoColaborador(string id) => Colaborador.DefinirSuperiorDireto(id);
 
     private string GerarSenhaAleatoria()
     {
         Guid guidSenha = Guid.NewGuid(); // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
         string senhaAleatoria = guidSenha.ToString().Substring(1, 7);
 
-        return senhaAleatoria + Id.ToString();
+        return senhaAleatoria;
     }
 
 }
