@@ -4,4 +4,5 @@ public enum StatusLivroEnum
 {
     Disponivel = 1,
     Reservado = 2,
+    Indisponivel = 3,
 }

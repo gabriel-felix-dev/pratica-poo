@@ -27,6 +27,15 @@ public class Usuario
 
     public void RemoveLivroDeAluno() => LivrosReservados--;
 
-    public override string ToString() => $"Id {Id} | Nome: {Nome} | Email: {Email} | Telefone: {Telefone} | Status Cadastro: {StatusCadastrado} | Data de Cadastro: {DataCadastro}";
+    public string DeletaAluno()
+    {
+        if (LivrosReservados > 0)        
+            return"Não foi possível excluir o usuário, ele tem livros reservados.";
+
+        StatusCadastrado = StatusCadastroEnum.Inativo;
+        return $"\nStatus de cadastro do usuario {Nome} foi alterado!";
+    }
+
+    public override string ToString() => $"Id: {Id} | Nome: {Nome} | Email: {Email} | Telefone: {Telefone} | Quantidade de livros reservados: {LivrosReservados} | Status Cadastro: {StatusCadastrado} | Data de Cadastro: {DataCadastro}";
 
 }

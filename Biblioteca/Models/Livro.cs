@@ -1,4 +1,5 @@
 using Biblioteca.Enums;
+using Biblioteca.Repositories;
 
 namespace Biblioteca.Models;
 
@@ -21,6 +22,15 @@ public class Livro
     public StatusLivroEnum StatusLivro { get; private set; }
 
     public void AlteraStatus(StatusLivroEnum novoStatus) => StatusLivro = novoStatus;
+
+    public string DeletaLivro()
+    {
+        if (StatusLivro.Equals(StatusLivroEnum.Reservado))
+            return "\nNão foi possível excluir o livro, ele está reservado.";
+
+        StatusLivro = StatusLivroEnum.Indisponivel;
+        return $"\nStatus do livro {Titulo} foi alterado!";
+    }
 
     public override string ToString() => $"Id: {Id} | Titulo: {Titulo} | Autor: {Autor} | Ano Publicação: {AnoPublicacao} | Status Livro: {StatusLivro}";
 }

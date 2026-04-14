@@ -9,31 +9,37 @@ public class EmprestimoRepository
 
     public static readonly List<Emprestimo> _emprestimos = [];
 
-    public static void AdicionarEmprestimo(Emprestimo emprestimo)
+    public static string AdicionarEmprestimo(Emprestimo emprestimo)
     {
         if (emprestimo.Livro.StatusLivro.Equals(StatusLivroEnum.Reservado))
-            throw new ArgumentException("Não é possivel reservar livro já reservado");
+            return "\nNão é possivel reservar livro já reservado";
 
         if (emprestimo.Usuario.LivrosReservados == 3)
-            throw new ArgumentException("O usuario não pode ter mais de 3 livros reservados");
+            return "\nO usuario não pode ter mais de 3 livros reservados";
 
-        if (emprestimo.Livro.StatusLivro.Equals(StatusLivroEnum.Disponivel) && emprestimo.Usuario.LivrosReservados < 3)
-        {
-            emprestimo.Usuario.AdicinaQuantidadeLivroReservado();
-            emprestimo.Livro.AlteraStatus(StatusLivroEnum.Reservado);
-            _emprestimos.Add(emprestimo);
-        }
+
+        emprestimo.Usuario.AdicinaQuantidadeLivroReservado();
+        emprestimo.Livro.AlteraStatus(StatusLivroEnum.Reservado);
+        _emprestimos.Add(emprestimo);
+
+        return "\nO emprestimo foi registrado com sucesso";
+
     }
 
-    public static void DevolverLivro(int idEmprestimo)
+    public static List<Emprestimo> RetornaLista() => _emprestimos;
+
+    public static string DevolverLivro(int idEmprestimo, int diasComLivro)
     {
         var emprestimo = _emprestimos.FirstOrDefault(e => e.Id == idEmprestimo);
 
         if (emprestimo == null)
-            throw new ArgumentException("O emprestimo não existe");
+            return "\nO emprestimo não existe";
 
         emprestimo.Livro.AlteraStatus(StatusLivroEnum.Disponivel);
         emprestimo.AlteraStatus(StatusEmprestimoEnum.Finalizado);
+        emprestimo.DefineDataDevolucao(diasComLivro);
         emprestimo.Usuario.RemoveLivroDeAluno();
+
+        return $"\nLivro {emprestimo.Livro.Titulo} devolvido! Dia da devolução: {emprestimo.DataDevolucaoRealizada} - {emprestimo.CalculaMultaPorAtraso(diasComLivro)}";
     }
 }

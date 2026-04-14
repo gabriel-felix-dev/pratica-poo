@@ -7,4 +7,6 @@ public class LivroRepository
     private static readonly List<Livro> _livros = [];
 
     public static void AdicionarLivro(Livro livro) => _livros.Add(livro);
+
+    public static List<Livro> RetornaLista() => _livros;
 }
