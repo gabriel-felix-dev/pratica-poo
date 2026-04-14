@@ -4,30 +4,28 @@ namespace tarefas.Models;
 
 public class Usuario
 {
-    public Usuario(PerfilAcessoEnum perfilAcesso, string nome, string email)
+    public Usuario(PerfilAcessoEnum perfilAcesso, string nome, string email, DateTime dataNascimento)
     {
         Id = Guid.NewGuid().ToString();
         PerfilAcesso = perfilAcesso;
-        Nome = nome;
         Email = email;
         Senha = GerarSenhaAleatoria();
-        Colaborador = new Colaborador(idUsuario: Id);
+        Colaborador = new Colaborador(idUsuario: Id, nome, dataNascimento);
+        // TODO: Criar um método para o perfil de acesso defina qual a instância do colaborador
+        //  seja ele gerente ou funcionario, OU SEJA, definir qual o tipo será instanciado
     }
 
     public string Id { get; }
     public PerfilAcessoEnum PerfilAcesso { get; }
-    public string Nome { get; private set; }
     public string Email { get; private set; }
-    public DateTime DataNascimento { get; private set; }
     public string Senha { get; private set; }
 
     public Colaborador Colaborador { get; private set; }
 
     public void AlterarDadosCadastrais(string nome, DateTime dataNascimento, string email)
     {
-        Nome = nome;
         Email = email;
-        DataNascimento = dataNascimento;
+        Colaborador.AtualizarDadosPessoais(nome, dataNascimento);
     }
 
     public void AlterarSenha(string novaSenha)
@@ -44,20 +42,13 @@ public class Usuario
     public override string ToString()
     {
         string textoApresentacao = string.IsNullOrEmpty(Colaborador.IdSuperior)
-            ? $" Id: {Id}, Nome: {Nome}, Email: {Email}"
-            : $" Id: {Id}, Nome: {Nome}, Email: {Email}, Código Superior {Colaborador.ObterCodigoGerenteResponsavelFormatado()}";
+            ? $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}"
+            : $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}, Código Superior {Colaborador.ObterCodigoGerenteResponsavelFormatado()}";
 
         return textoApresentacao;
     }
 
-    public void DefinirSuperiorDiretoDoColaborador(string id) => Colaborador.DefinirSuperiorDireto(id);
+    public void DefinirSuperiorDiretoDoColaborador(Colaborador colaborador) => Colaborador.DefinirSuperiorDireto(colaborador.Id);
 
-    private string GerarSenhaAleatoria()
-    {
-        Guid guidSenha = Guid.NewGuid(); // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
-        string senhaAleatoria = guidSenha.ToString().Substring(1, 7);
-
-        return senhaAleatoria;
-    }
-
+    private string GerarSenhaAleatoria() => Guid.NewGuid().ToString().Substring(1, 7); // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
 }
