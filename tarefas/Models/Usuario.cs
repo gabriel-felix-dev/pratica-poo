@@ -10,8 +10,9 @@ public class Usuario
         PerfilAcesso = perfilAcesso;
         Email = email;
         Senha = GerarSenhaAleatoria();
-        Colaborador = new Colaborador(idUsuario: Id, nome, dataNascimento);
-        // TODO: Criar um método para o perfil de acesso defina qual a instância do colaborador
+        Colaborador = CriarColaborador(perfilAcesso, nome, dataNascimento); // new Colaborador(idUsuario: Id, nome, dataNascimento);
+
+        // TODO: Criar um método para que o nosso perfil de acesso defina qual é a instância do colaborador
         //  seja ele gerente ou funcionario, OU SEJA, definir qual o tipo será instanciado
     }
 
@@ -41,14 +42,23 @@ public class Usuario
 
     public override string ToString()
     {
-        string textoApresentacao = string.IsNullOrEmpty(Colaborador.IdSuperior)
+        return Colaborador?.Superior is not null
             ? $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}"
-            : $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}, Código Superior {Colaborador.ObterCodigoGerenteResponsavelFormatado()}";
-
-        return textoApresentacao;
+            : $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}, Código Superior {Colaborador.Superior.Nome}";
     }
 
-    public void DefinirSuperiorDiretoDoColaborador(Colaborador colaborador) => Colaborador.DefinirSuperiorDireto(colaborador.Id);
+    public void DefinirSuperiorDiretoDoColaborador(Colaborador colaborador) => Colaborador.DefinirSuperiorDireto(colaborador);
 
-    private string GerarSenhaAleatoria() => Guid.NewGuid().ToString().Substring(1, 7); // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
+    private string GerarSenhaAleatoria() => Guid.NewGuid().ToString().Substring(1, 7);
+    // Cria uma hash aleatória usando o Guid, que é um identificador único global. Ele gera uma string única a cada vez que é chamado.
+
+    private Colaborador CriarColaborador(PerfilAcessoEnum perfilAcesso, string nome, DateTime dataNascimento)
+    {
+        return perfilAcesso switch
+        {
+            PerfilAcessoEnum.Gerente => new Gerente(Id, nome, dataNascimento),
+            PerfilAcessoEnum.Funcionario => new Funcionario(Id, nome, dataNascimento),
+            _ => null
+        };
+    }
 }
