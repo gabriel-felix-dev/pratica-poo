@@ -6,7 +6,7 @@ public static class Helper
     {
         if (string.IsNullOrWhiteSpace(nome))
         {
-            Console.WriteLine("O nome da categoria deve ser preenchido");
+            Console.WriteLine("\nO nome da categoria deve ser preenchido");
             return;
         }
     }

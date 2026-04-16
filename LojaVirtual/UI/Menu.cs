@@ -33,7 +33,7 @@ public static class Menu
     {
         string nomeCategoria;
 
-        Console.Write($"Digite o nome da Categoria: ");
+        Console.Write($"\nDigite o nome da Categoria: ");
         nomeCategoria = Console.ReadLine().Trim();
 
         Helper.ValidaNomeCategoria(nomeCategoria);
