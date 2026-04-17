@@ -4,6 +4,8 @@ namespace tarefas.Models;
 
 public abstract class Colaborador
 {
+    private readonly List<Tarefa> _tarefas = [];
+
     public Colaborador(string idUsuario, string nome, DateTime dataNascimento)
     {
         Id = Guid.NewGuid().ToString();
@@ -19,12 +21,25 @@ public abstract class Colaborador
     public DateTime DataNascimento { get; private set; }
 
     public abstract CargoEnum Cargo { get; protected set; }
-    public List<Tarefa> Tarefas { get; } = []; // Todo Colaborador tem uma lista de Tarefas, mas só o gerente pode atribuir tarefa;
+    public IReadOnlyList<Tarefa> Tarefas { get => _tarefas.AsReadOnly(); }
+    //public List<Tarefa> Tarefas { get; private set; } = []; // Todo Colaborador tem uma lista de Tarefas, mas só o gerente pode atribuir tarefa;
 
     public void AtualizarDadosPessoais(string nome, DateTime dataNascimento)
     {
         Nome = nome;
         DataNascimento = dataNascimento;
+    }
+
+    public void FinalizarTarefa(string idTarefa)
+    {
+        var tarefaParaFinalizar = _tarefas?.FirstOrDefault(t => t.Id == idTarefa);
+        tarefaParaFinalizar?.Concluir();
+    }
+
+    public void IniciarTarefa(string idTarefa)
+    {
+        var tarefaParaIniciar = _tarefas?.FirstOrDefault(t => t.Id == idTarefa);
+        tarefaParaIniciar?.Concluir();
     }
 
     public void DefinirSuperiorDireto(Colaborador colaborador)
@@ -38,7 +53,10 @@ public abstract class Colaborador
         Superior = gerente;
     }
 
-    public void AdicionarTarefa(Tarefa tarefa) => Tarefas.Add(tarefa);
+    public void AdicionarTarefa(string titulo, string descricao, TipoTarefaEnum tipo, string idGerente)
+    {
+        _tarefas.Add(new Tarefa(titulo, descricao, tipo, idGerente, Id));
+    }
 
     public List<Tarefa> ListarTarefas()
     {
@@ -48,7 +66,7 @@ public abstract class Colaborador
             return [];
         }
 
-        return Tarefas;
+        return Tarefas.ToList();
     }
 
     public List<Tarefa> ListarTarefas(TarefasStatusEnum status)
