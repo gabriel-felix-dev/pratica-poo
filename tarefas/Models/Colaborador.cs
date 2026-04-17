@@ -50,8 +50,8 @@ public abstract class Colaborador
 
         return Tarefas;
     }
-    
-    public List<Tarefa> ListarTarefas(bool status)
+
+    public List<Tarefa> ListarTarefas(TarefasStatusEnum status)
     {
         if (Tarefas.Count() == 0)
         {
@@ -59,7 +59,14 @@ public abstract class Colaborador
             return [];
         }
 
-        return Tarefas;
+        return Tarefas.Where(t => t.TarefasStatus == status).ToList();
+    }
+
+    public override string ToString()
+    {
+        return Superior is null
+        ? $"Nome: {Nome} | Cargo: {Cargo}"
+        : $"Nome: {Nome} | Cargo: {Cargo} | Gestor: {Superior.Nome}";
     }
 
     //public string ObterCodigoGerenteResponsavelFormatado() => Superior?.Id.Substring(1, 7);

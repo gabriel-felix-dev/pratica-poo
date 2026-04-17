@@ -1,9 +1,13 @@
+using System.ComponentModel;
+
 namespace tarefas.Enums;
 
 public enum TarefasStatusEnum
 {
-    Iniciada = 1,
-    Cadastrada = 2,
-    EmAndamento = 3,
-    Concluida = 4,
+    [Description("Cadastrada")]
+    Cadastrada = 1,
+    [Description("Em andamento")]
+    EmAndamento = 2,
+    [Description("Concluída")]
+    Concluida = 3,
 }

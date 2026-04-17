@@ -1,4 +1,5 @@
 using tarefas.Enums;
+using tarefas.Helpers;
 
 namespace tarefas.Models;
 
@@ -30,6 +31,6 @@ public class Tarefa
         DataFinalizacao = DateTime.Today;
     }
 
-    public override string ToString() => $"Id:{Id} | Título: {Titulo} | Descrição: {Descricao} | Tipo da Tarefa: {TipoTarefa} | Data Criação: {DataCriacao} | DataFinalizacao: {DataFinalizacao} | Status: {TarefasStatus}";
+    public override string ToString() => $"Id:{Id} | Título: {Titulo} | Descrição: {Descricao} | Tipo da Tarefa: {TipoTarefa} | Data Criação: {DataCriacao} | DataFinalizacao: {DataFinalizacao} | Status: {TarefasStatus.PegaDescricaoEnum()}";
 
 }

@@ -42,9 +42,18 @@ public class Usuario
 
     public override string ToString()
     {
-        return Colaborador?.Superior is not null
-            ? $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}"
-            : $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}, Código Superior {Colaborador.Superior.Nome}";
+        // Return inicial de colaborador
+        // return Colaborador?.Superior is null
+        //     ? $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}"
+        //     : $" Id: {Id}, Nome: {Colaborador.Nome}, Email: {Email}, Nome do Superior {Colaborador.Superior.Nome}";
+
+        string stringColaborador = Colaborador?.ToString();
+
+        return string.IsNullOrEmpty(stringColaborador)
+            ? $"Email: {Email}, Perfil de Acesso: {PerfilAcesso}" // Retornará no caso do Adm
+            : Colaborador.Superior is null
+                ? $"{stringColaborador}, Email: {Email}" // Retornará o colaborador sem superior
+                : stringColaborador; // Retornará o colaborador sem superior
     }
 
     public void DefinirSuperiorDiretoDoColaborador(Colaborador colaborador) => Colaborador.DefinirSuperiorDireto(colaborador);
