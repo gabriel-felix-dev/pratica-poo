@@ -25,7 +25,7 @@
 
 -> Todo pedido deve estar obrigatoriamente vinculado a um cliente, sem o qual ele não pode ser cadastrado
 
-# Entrega: (Associação de Cliente e Pedido)
+# Entrega: (Associação de Transportadora e Pedido)
 
 - datacoleta
 - prazo estumado em dias
@@ -33,5 +33,3 @@
 - status entrega: Enum: (Coletado, Em Trânsito, Entregue ou Devolvido)
 
 -> Um pedido não pode ter duas entregas ativas ao mesmo tempo.
-
-# TODO -> Deixar salvo um validador de CPF, email, string, int, decimal, double, guid, data
