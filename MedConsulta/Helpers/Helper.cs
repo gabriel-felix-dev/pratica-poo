@@ -1,3 +1,5 @@
+using MedConsulta.Enums;
+
 namespace MedConsulta.Helpers;
 
 public static class Helper
@@ -42,7 +44,7 @@ public static class Helper
     {
         if (lista.Count == 0)
         {
-            Console.WriteLine($"\nNenhum item cadastrado na lista de {texto}.");
+            Console.WriteLine($"\nNenhum(a) {texto} cadastrado(a).");
             ReduzirTempo();
             return true;
         }
@@ -77,7 +79,38 @@ public static class Helper
             texto = Console.ReadLine().Trim();
         }
 
-        return $"CRM{texto}";
+        return $"CONS{texto}";
+    }
+
+    public static DateTime ValidadorDataHora()
+    {
+        DateTime datahora;
+
+        while (!DateTime.TryParse(Console.ReadLine().Trim(), out datahora) || datahora < DateTime.Now)
+            Console.Write("\nData inválida, digite novamente: ");
+
+        return datahora;
+    }
+
+    public static int ValidadorNumeroInteiro()
+    {
+        int numero;
+
+        while (!int.TryParse(Console.ReadLine().Trim(), out numero) || numero < 0)
+            Console.Write("\nOpção inválida, digite novamente: ");
+
+        return numero;
+    }
+
+    public static int ValidadorStatusConsultaEnum()
+    {
+        StatusConsultaEnum[] opcoes = Enum.GetValues<StatusConsultaEnum>();
+        int numero;
+
+        while (!int.TryParse(Console.ReadLine().Trim(), out numero) || numero < 0 || numero > opcoes.Length)
+            Console.Write("\nOpção inválida, digite novamente: ");
+
+        return numero;
     }
 
     static void ReduzirTempo() => Thread.Sleep(1500);

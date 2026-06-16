@@ -1,4 +1,5 @@
-﻿using MedConsulta.Helpers;
+﻿using MedConsulta.Enums;
+using MedConsulta.Helpers;
 using MedConsulta.Models;
 
 List<Medico> medicos = [];
@@ -43,6 +44,7 @@ while (true)
                 continue;
 
             ListarItens(medicos, "Medico");
+            ReduzirTempo();
             break;
         case 3:
             medico = ValidadorMedico();
@@ -92,7 +94,12 @@ while (true)
             MensagemSucesso();
             break;
         case 6:
-            Console.Write("\nInforme o código consulta (4 dígitos - Exemplo:  0512): ");
+            medico = ValidadorMedico();
+
+            if (Helper.ValidadorObjetoNulo(medico))
+                continue;
+
+            Console.Write("\nInforme o código da consulta (4 dígitos - Exemplo:  0512): ");
             var codigoConsulta = Helper.ValidadorNumeroConsulta();
 
             if (consultas.Any(x => x.CodigoUnico.Equals(codigoConsulta)))
@@ -102,23 +109,122 @@ while (true)
                 continue;
             }
 
+            Console.Write("\nInforme o local de atendimento da consulta: ");
+            var localAtendimentoConsulta = Helper.ValidadorTexto();
+
+            Console.Write("\nInforme a data e hora previstas para a consulta: ");
+            var dataHoraPrevistaConsulta = Helper.ValidadorDataHora();
+
+            Console.Write("\nInforme a duração em minutos da consulta: ");
+            var duracaoConsulta = Helper.ValidadorNumeroInteiro();
+
+            StatusConsultaEnum[] opcoes = Enum.GetValues<StatusConsultaEnum>();
+            Console.WriteLine("\nStatus Consulta: \n");
+            for (int i = 0; i < opcoes.Length; i++)
+                Console.WriteLine($"{i + 1} - {opcoes[i]}");
+
+            Console.Write("\nEscolha: ");
+            var opcaoMenuStatusConsultaEnum = Helper.ValidadorStatusConsultaEnum();
+
+            var opcaoStatusConsultaEnum = opcaoMenuStatusConsultaEnum switch
+            {
+                1 => StatusConsultaEnum.Pendente,
+                2 => StatusConsultaEnum.Confirmada,
+                3 => StatusConsultaEnum.Realizada,
+                _ => StatusConsultaEnum.Cancelada,
+            };
+
+            Consulta consulta = new(medico, codigoConsulta, localAtendimentoConsulta, dataHoraPrevistaConsulta, duracaoConsulta, opcaoStatusConsultaEnum);
+
+            consultas.Add(consulta);
+
+            MensagemSucesso();
+            break;
+        case 7:
+            if (Helper.ValidadorListaVazia(consultas, "Consulta"))
+                continue;
+
+            ListarItens(consultas, "Consulta");
+            ReduzirTempo();
+            break;
+        case 8:
+            consulta = ValidadorConsulta();
+
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
+            Console.Write("\nInforme o novo código de consulta (4 dígitos - Exemplo:  0512): ");
+            codigoConsulta = Helper.ValidadorNumeroConsulta();
+
+            if (consultas.Any(x => x.CodigoUnico.Equals(codigoConsulta)))
+            {
+                Console.WriteLine("\nConsulta já cadastrada.");
+                ReduzirTempo();
+                continue;
+            }
+
+            consulta.AlterarCodigoUnico(codigoConsulta);
+
+            MensagemSucesso();
+            break;
+        case 9:
+            consulta = ValidadorConsulta();
+
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
             medico = ValidadorMedico();
 
             if (Helper.ValidadorObjetoNulo(medico))
                 continue;
 
-            break;
-        case 7:
+            Console.Write("\nInforme o local de atendimento da consulta: ");
+            localAtendimentoConsulta = Helper.ValidadorTexto();
 
-            break;
-        case 8:
+            Console.Write("\nInforme a data e hora previstas para a consulta: ");
+            dataHoraPrevistaConsulta = Helper.ValidadorDataHora();
 
-            break;
-        case 9:
+            Console.Write("\nInforme a duração em minutos da consulta: ");
+            duracaoConsulta = Helper.ValidadorNumeroInteiro();
 
+            opcoes = Enum.GetValues<StatusConsultaEnum>();
+            Console.WriteLine("\nStatus Consulta: \n");
+            for (int i = 0; i < opcoes.Length; i++)
+                Console.WriteLine($"{i + 1} - {opcoes[i]}");
+
+            Console.Write("\nEscolha: ");
+            opcaoMenuStatusConsultaEnum = Helper.ValidadorStatusConsultaEnum();
+
+            opcaoStatusConsultaEnum = opcaoMenuStatusConsultaEnum switch
+            {
+                1 => StatusConsultaEnum.Pendente,
+                2 => StatusConsultaEnum.Confirmada,
+                3 => StatusConsultaEnum.Realizada,
+                _ => StatusConsultaEnum.Cancelada,
+            };
+
+            consulta.AlterarDados(medico, localAtendimentoConsulta, dataHoraPrevistaConsulta, duracaoConsulta, opcaoStatusConsultaEnum);
+
+            MensagemSucesso();
             break;
         case 10:
+            consulta = ValidadorConsulta();
 
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
+            if (!consulta.StatusConsulta.Equals(StatusConsultaEnum.Pendente) && !consulta.StatusConsulta.Equals(StatusConsultaEnum.Cancelada))
+            {
+                Console.WriteLine($"\nEstá consulta não pode ser excluída por ela está {consulta.StatusConsulta}.");
+                ReduzirTempo();
+                continue;
+            }
+
+            posicao = consultas.IndexOf(consulta);
+
+            consultas.RemoveAt(posicao);
+
+            MensagemSucesso();
             break;
         default:
             Console.WriteLine("Sistema encerrado.");
@@ -139,7 +245,6 @@ void ListarItens<T>(List<T> lista, string texto)
 {
     Console.WriteLine($"\nListar {texto} Cadastrados: \n");
     lista.ForEach(x => Console.WriteLine($"# - {x}"));
-    ReduzirTempo();
 }
 
 Medico ValidadorMedico()
@@ -147,7 +252,7 @@ Medico ValidadorMedico()
     if (Helper.ValidadorListaVazia(medicos, "Médico"))
         return null;
 
-    ListarItens(medicos, "Medico");
+    ListarItens(medicos, "Médico");
 
     Console.Write("\nInforme o Id do médico: ");
     var idMedico = Helper.ValidadorGuid();
@@ -155,6 +260,21 @@ Medico ValidadorMedico()
     var medico = medicos.FirstOrDefault(x => x.Id.Equals(idMedico));
 
     return medico;
+}
+
+Consulta ValidadorConsulta()
+{
+    if (Helper.ValidadorListaVazia(consultas, "Consulta"))
+        return null;
+
+    ListarItens(consultas, "Consulta");
+
+    Console.Write("\nInforme o Id da consulta: ");
+    var idConsulta = Helper.ValidadorGuid();
+
+    var consulta = consultas.FirstOrDefault(x => x.Id.Equals(idConsulta));
+
+    return consulta;
 }
 
 void Menu()
