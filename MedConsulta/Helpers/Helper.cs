@@ -148,7 +148,7 @@ public static class Helper
     {
         string texto = Console.ReadLine().Trim();
 
-        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || texto.Length < 11)
+        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || (texto.Length > 11 && texto.Length < 11))
         {
             Console.Write("Cpf inválido, digite novamente (somente números): ");
             texto = Console.ReadLine();
@@ -161,7 +161,7 @@ public static class Helper
     {
         string texto = Console.ReadLine().Trim();
 
-        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || texto.Length < 12)
+        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || (texto.Length < 12 && texto.Length > 12))
         {
             Console.Write("Número de carteirinha inválido, digite novamente (12 caracteres): ");
             texto = Console.ReadLine();

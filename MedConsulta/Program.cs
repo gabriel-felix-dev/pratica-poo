@@ -371,6 +371,22 @@ while (true)
             if (Helper.ValidadorObjetoNulo(paciente))
                 continue;
 
+            if (!Helper.ValidadorListaVazia(agendamentos, "Agendamentos"))
+            {
+                var agendamentosPaciente = agendamentos.Where(x => x.Paciente.Id.Equals(paciente.Id)).ToList();
+
+                var consultasAgendamentoPaciente = agendamentosPaciente.Where(x => !x.Consulta.StatusConsulta.Equals(StatusConsultaEnum.Cancelada)
+                                                                                && !x.Consulta.StatusConsulta.Equals(StatusConsultaEnum.Realizada))
+                                                                        .ToList();
+
+                if (consultasAgendamentoPaciente.Count > 0)
+                {
+                    Console.WriteLine($"\nO Paciente deve cancelar ou realizar a consulta antes de ser cancelado.");
+                    ReduzirTempo();
+                    continue;
+                }
+            }
+
             posicao = pacientes.IndexOf(paciente);
 
             pacientes.RemoveAt(posicao);
@@ -394,8 +410,11 @@ while (true)
             if (Helper.ValidadorObjetoNulo(paciente))
                 continue;
 
-            if (agendamentos.Any(x => x.Paciente.Equals(paciente)))
+            if (agendamentos.Any(x => x.Paciente.Id.Equals(paciente.Id)) && agendamentos.Any(x => x.Consulta.Id.Equals(consulta.Id)))
+            {
+                Console.WriteLine("O paciente não pode está ter dois agendamentos para a mesma consulta.");
                 continue;
+            }
 
             TipoAtendimentoEnum[] opcoesAtendimento = Enum.GetValues<TipoAtendimentoEnum>();
 
@@ -423,10 +442,101 @@ while (true)
             MensagemSucesso();
             break;
         case 20:
+            if (Helper.ValidadorListaVazia(agendamentos, "Agendamento"))
+                continue;
+
+            ListarItens(agendamentos, "Agendamento");
             break;
         case 21:
+            agendamento = ValidadorAgendamento();
+
+            if (Helper.ValidadorObjetoNulo(agendamento))
+                continue;
+
+            consulta = ValidadorConsulta();
+
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
+            if (consulta.DataHoraPrevista < DateTime.Now)
+            {
+                Console.WriteLine("A data da consulta não pode ser menor que hoje.");
+                ReduzirTempo();
+                continue;
+            }
+
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            if (agendamentos.Any(x => x.Paciente.Id.Equals(paciente.Id)) && agendamentos.Any(x => x.Consulta.Id.Equals(consulta.Id)))
+            {
+                Console.WriteLine("O paciente não pode está ter dois agendamentos para a mesma consulta.");
+                continue;
+            }
+
+            opcoesAtendimento = Enum.GetValues<TipoAtendimentoEnum>();
+
+            Console.WriteLine("\nTipo Atendimento: \n");
+            for (int i = 0; i < opcoesAtendimento.Length; i++)
+                Console.WriteLine($"{i + 1} - {opcoesAtendimento[i]}");
+
+            Console.Write("\nEscolha: ");
+            opcaoMenuTiposAtendimentoltaEnum = Helper.ValidadorTipoAtendimentoEnum();
+
+            opcaoTipoAtendimentoEnum = opcaoMenuTiposAtendimentoltaEnum switch
+            {
+                1 => TipoAtendimentoEnum.Presencial,
+                2 => TipoAtendimentoEnum.Telemedicina,
+                _ => TipoAtendimentoEnum.ProcedimentoComplexo,
+            };
+
+            Console.Write("\nInforme o valor cobrado: ");
+            valorCobradoAgendamento = Helper.ValidadorDecimal();
+
+            agendamento.AlterarDados(paciente, consulta, opcaoTipoAtendimentoEnum, valorCobradoAgendamento);
+
+            MensagemSucesso();
             break;
         case 22:
+            agendamento = ValidadorAgendamento();
+
+            if (Helper.ValidadorObjetoNulo(agendamento))
+                continue;
+
+            if (!agendamento.Consulta.StatusConsulta.Equals(StatusConsultaEnum.Cancelada) || !agendamento.Consulta.StatusConsulta.Equals(StatusConsultaEnum.Realizada))
+            {
+                Console.WriteLine("\nA Consulta do agendamento precisa está realizada ou cancelada para ser excluída.");
+                ReduzirTempo();
+                continue;
+            }
+
+            posicao = agendamentos.IndexOf(agendamento);
+
+            agendamentos.RemoveAt(posicao);
+            break;
+        case 23:
+            Console.WriteLine("23 - Ranking de Agendamentos\n");
+            // Ranking de Agendamentos por Consulta
+            // -> Dado o código de uma consulta, exibir a quantidade de pacientes agendados
+            // -> Detalhar a quantidade por tipo de atendimento
+            // -> Ordenar os grupos em ordem decrescente de quantidade de pacientes
+
+            consulta = ValidadorConsulta();
+
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
+            var listaPacientesAgendados = agendamentos.Where(x => x.Consulta.Id.Equals(consulta.Id))
+                                                      .ToList();
+
+            break;
+        case 24:
+            Console.WriteLine("24 - Histórico de Consultas por Paciente\n");
+            break;
+        case 25:
+            Console.WriteLine("25 - Filtro por Tipo de Atendimento\n");
             break;
         default:
             Console.WriteLine("Sistema encerrado.");
@@ -456,7 +566,7 @@ Medico ValidadorMedico()
 
     ListarItens(medicos, "Médico");
 
-    Console.Write("\nInforme o Id do médico: ");
+    Console.Write("\nInforme o Id do médico desejado: ");
     var idMedico = Helper.ValidadorGuid();
 
     var medico = medicos.FirstOrDefault(x => x.Id.Equals(idMedico));
@@ -471,7 +581,7 @@ Consulta ValidadorConsulta()
 
     ListarItens(consultas, "Consulta");
 
-    Console.Write("\nInforme o Id da consulta: ");
+    Console.Write("\nInforme o Id da consulta desejada: ");
     var idConsulta = Helper.ValidadorGuid();
 
     var consulta = consultas.FirstOrDefault(x => x.Id.Equals(idConsulta));
@@ -486,12 +596,27 @@ Paciente ValidadorPaciente()
 
     ListarItens(pacientes, "Paciente");
 
-    Console.Write("\nInforme o Id da paciente: ");
+    Console.Write("\nInforme o Id da paciente desejado: ");
     var idPaciente = Helper.ValidadorGuid();
 
     var paciente = pacientes.FirstOrDefault(x => x.Id.Equals(idPaciente));
 
     return paciente;
+}
+
+Agendamento ValidadorAgendamento()
+{
+    if (Helper.ValidadorListaVazia(agendamentos, "Agendamento"))
+        return null;
+
+    ListarItens(agendamentos, "Agendamento");
+
+    Console.Write("\nInforme o Id da agendamento desejado: ");
+    var idAgendamento = Helper.ValidadorGuid();
+
+    var agendamento = agendamentos.FirstOrDefault(x => x.Id.Equals(idAgendamento));
+
+    return agendamento;
 }
 
 void Menu()
@@ -530,7 +655,7 @@ void Menu()
     Console.WriteLine("19 - Cadastrar Agendamento\n");
     Console.WriteLine("20 - Listar Agendamentos Cadastrados\n");
     Console.WriteLine("21 - Alterar Dados de Agendamento\n");
-    Console.WriteLine("22 - Cadastrar Agendamento");
+    Console.WriteLine("22 - Excluir Agendamento");
 
     Console.WriteLine("\n#### - Funcionalidades - ####\n");
 
