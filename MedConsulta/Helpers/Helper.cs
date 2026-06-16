@@ -82,11 +82,21 @@ public static class Helper
         return $"CONS{texto}";
     }
 
-    public static DateTime ValidadorDataHora()
+    public static DateTime ValidadorDataHoraConsulta()
     {
         DateTime datahora;
 
         while (!DateTime.TryParse(Console.ReadLine().Trim(), out datahora) || datahora < DateTime.Now)
+            Console.Write("\nData inválida, digite novamente: ");
+
+        return datahora;
+    }
+
+    public static DateTime ValidadorDataNascimento()
+    {
+        DateTime datahora;
+
+        while (!DateTime.TryParse(Console.ReadLine().Trim(), out datahora) || datahora > DateTime.Now)
             Console.Write("\nData inválida, digite novamente: ");
 
         return datahora;
@@ -97,7 +107,17 @@ public static class Helper
         int numero;
 
         while (!int.TryParse(Console.ReadLine().Trim(), out numero) || numero < 0)
-            Console.Write("\nOpção inválida, digite novamente: ");
+            Console.Write("\nValor inválido, digite novamente: ");
+
+        return numero;
+    }
+
+    public static decimal ValidadorDecimal()
+    {
+        decimal numero;
+
+        while (!decimal.TryParse(Console.ReadLine().Trim(), out numero) || numero < 0)
+            Console.Write("\nValor inválido, digite novamente: ");
 
         return numero;
     }
@@ -111,6 +131,43 @@ public static class Helper
             Console.Write("\nOpção inválida, digite novamente: ");
 
         return numero;
+    }
+
+    public static int ValidadorTipoAtendimentoEnum()
+    {
+        TipoAtendimentoEnum[] opcoes = Enum.GetValues<TipoAtendimentoEnum>();
+        int numero;
+
+        while (!int.TryParse(Console.ReadLine().Trim(), out numero) || numero < 0 || numero > opcoes.Length)
+            Console.Write("\nOpção inválida, digite novamente: ");
+
+        return numero;
+    }
+
+    public static string ValidadorCpf()
+    {
+        string texto = Console.ReadLine().Trim();
+
+        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || texto.Length < 11)
+        {
+            Console.Write("Cpf inválido, digite novamente (somente números): ");
+            texto = Console.ReadLine();
+        }
+
+        return texto;
+    }
+
+    public static string ValidadorCarteirinha()
+    {
+        string texto = Console.ReadLine().Trim();
+
+        while (string.IsNullOrWhiteSpace(texto) || !texto.All(char.IsDigit) || texto.Length < 12)
+        {
+            Console.Write("Número de carteirinha inválido, digite novamente (12 caracteres): ");
+            texto = Console.ReadLine();
+        }
+
+        return texto;
     }
 
     static void ReduzirTempo() => Thread.Sleep(1500);

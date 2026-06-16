@@ -23,5 +23,5 @@ public class Consulta(Medico medico, string codigoUnico, string localAtendimento
         StatusConsulta = statusConsulta;
     }
 
-    public override string ToString() => $"Id: {Id} | Código Consulta: {CodigoUnico} | Local de Atendimento: {LocalAtendimento} | Data e Hora Previstas: {DataHoraPrevista:d} | Duração: {Duracao} minutos | Status da Consulta: {StatusConsulta} | Médico: {Medico.Nome}";
+    public override string ToString() => $"Id: {Id} | Código Consulta: {CodigoUnico} | Local de Atendimento: {LocalAtendimento} | Data e Hora Previstas: {DataHoraPrevista:g} | Duração: {Duracao} minutos | Status da Consulta: {StatusConsulta} | Médico: {Medico.Nome}";
 }

@@ -113,7 +113,7 @@ while (true)
             var localAtendimentoConsulta = Helper.ValidadorTexto();
 
             Console.Write("\nInforme a data e hora previstas para a consulta: ");
-            var dataHoraPrevistaConsulta = Helper.ValidadorDataHora();
+            var dataHoraPrevistaConsulta = Helper.ValidadorDataHoraConsulta();
 
             Console.Write("\nInforme a duração em minutos da consulta: ");
             var duracaoConsulta = Helper.ValidadorNumeroInteiro();
@@ -182,7 +182,7 @@ while (true)
             localAtendimentoConsulta = Helper.ValidadorTexto();
 
             Console.Write("\nInforme a data e hora previstas para a consulta: ");
-            dataHoraPrevistaConsulta = Helper.ValidadorDataHora();
+            dataHoraPrevistaConsulta = Helper.ValidadorDataHoraConsulta();
 
             Console.Write("\nInforme a duração em minutos da consulta: ");
             duracaoConsulta = Helper.ValidadorNumeroInteiro();
@@ -225,6 +225,208 @@ while (true)
             consultas.RemoveAt(posicao);
 
             MensagemSucesso();
+            break;
+        case 11:
+            Console.Write("\nInforme o nome do paciente: ");
+            var nomePaciente = Helper.ValidadorTexto();
+
+            Console.Write("\nInforme o CPF do paciente (somente os dígitos): ");
+            var cpfPaciente = Helper.ValidadorCpf();
+
+            if (pacientes.Any(x => x.Cpf.Equals(cpfPaciente)))
+            {
+                Console.Write("\nCpf já cadastrado no sistema.");
+                ReduzirTempo();
+                continue;
+            }
+
+            Console.Write("\nInforme o número da carteirinha (12 caracteres): ");
+            var carteirinhaPaciente = Helper.ValidadorCarteirinha();
+
+            if (pacientes.Any(x => x.NumeroCarteirinha.Equals(carteirinhaPaciente)))
+            {
+                Console.WriteLine("\nCarteirinha já cadastrada no sistema.");
+                ReduzirTempo();
+                continue;
+            }
+
+            Console.Write("\nInforme a data de nascimento do pacietene: ");
+            var dataNascimentoPaciente = Helper.ValidadorDataNascimento();
+
+            Paciente paciente = new(nomePaciente, cpfPaciente, carteirinhaPaciente, dataNascimentoPaciente);
+
+            pacientes.Add(paciente);
+
+            MensagemSucesso();
+            break;
+        case 12:
+            if (Helper.ValidadorListaVazia(pacientes, "Paciente"))
+                continue;
+
+            ListarItens(pacientes, "Paciente");
+
+            ReduzirTempo();
+            break;
+        case 13:
+            if (Helper.ValidadorListaVazia(pacientes, "Paciente"))
+                continue;
+
+            Console.Write("\nDigite o nome do paciente para busca: ");
+            nomePaciente = Helper.ValidadorTexto().ToLower();
+
+            var resultadoBusca = pacientes.Where(x => x.Nome.ToLower().Contains(nomePaciente)).ToList();
+
+            if (resultadoBusca.Count == 0)
+            {
+                Console.WriteLine("\nNenhum paciente encontrado.");
+                ReduzirTempo();
+                continue;
+            }
+
+            Console.WriteLine($"\nPacientes encontrados com o nome \"{nomePaciente}\": \n");
+            resultadoBusca.ForEach(x => Console.WriteLine($"# - {x}"));
+
+            ReduzirTempo();
+            break;
+        case 14:
+            if (Helper.ValidadorListaVazia(pacientes, "Paciente"))
+                continue;
+
+            Console.Write("\nDigite o nome do paciente para busca: ");
+            nomePaciente = Helper.ValidadorTexto();
+
+            resultadoBusca = pacientes.Where(x => x.Nome.Contains(nomePaciente)).ToList();
+
+            if (resultadoBusca.Count == 0)
+            {
+                Console.WriteLine("\nNenhum paciente encontrado.");
+                ReduzirTempo();
+                continue;
+            }
+
+            Console.WriteLine($"\nPacientes encontrados com o nome \"{nomePaciente}\": \n");
+            resultadoBusca.ForEach(x => Console.WriteLine($"# - {x}"));
+
+            ReduzirTempo();
+            break;
+        case 15:
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            Console.Write("\nInforme o novo Cpf para do paciente: ");
+            cpfPaciente = Helper.ValidadorCpf();
+
+            if (pacientes.Any(x => x.Cpf.Equals(cpfPaciente)))
+            {
+                Console.WriteLine("\nCpf já cadastrado.");
+                ReduzirTempo();
+                continue;
+            }
+
+            paciente.AlterarCpf(cpfPaciente);
+
+            MensagemSucesso();
+            break;
+        case 16:
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            Console.Write("\nInforme o novo número para a carteirinha (12 dígitos): ");
+            carteirinhaPaciente = Helper.ValidadorCarteirinha();
+
+            if (pacientes.Any(x => x.NumeroCarteirinha.Equals(carteirinhaPaciente)))
+            {
+                Console.WriteLine("\nCarteirinha já cadastrada.");
+                ReduzirTempo();
+                continue;
+            }
+
+            paciente.AlterarNumeroCarteirinha(carteirinhaPaciente);
+
+            MensagemSucesso();
+            break;
+        case 17:
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            Console.Write("\nInforme o nome do paciente: ");
+            nomePaciente = Helper.ValidadorTexto();
+
+            Console.Write("\nInforme a data de nascimento do pacietene: ");
+            dataNascimentoPaciente = Helper.ValidadorDataNascimento();
+
+            paciente.AlterarDados(nomePaciente, dataNascimentoPaciente);
+
+            MensagemSucesso();
+            break;
+        case 18:
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            posicao = pacientes.IndexOf(paciente);
+
+            pacientes.RemoveAt(posicao);
+            MensagemSucesso();
+            break;
+        case 19:
+            consulta = ValidadorConsulta();
+
+            if (Helper.ValidadorObjetoNulo(consulta))
+                continue;
+
+            if (consulta.DataHoraPrevista < DateTime.Now)
+            {
+                Console.WriteLine("A data da consulta não pode ser menor que hoje.");
+                ReduzirTempo();
+                continue;
+            }
+
+            paciente = ValidadorPaciente();
+
+            if (Helper.ValidadorObjetoNulo(paciente))
+                continue;
+
+            if (agendamentos.Any(x => x.Paciente.Equals(paciente)))
+                continue;
+
+            TipoAtendimentoEnum[] opcoesAtendimento = Enum.GetValues<TipoAtendimentoEnum>();
+
+            Console.WriteLine("\nTipo Atendimento: \n");
+            for (int i = 0; i < opcoesAtendimento.Length; i++)
+                Console.WriteLine($"{i + 1} - {opcoesAtendimento[i]}");
+
+            Console.Write("\nEscolha: ");
+            var opcaoMenuTiposAtendimentoltaEnum = Helper.ValidadorTipoAtendimentoEnum();
+
+            var opcaoTipoAtendimentoEnum = opcaoMenuTiposAtendimentoltaEnum switch
+            {
+                1 => TipoAtendimentoEnum.Presencial,
+                2 => TipoAtendimentoEnum.Telemedicina,
+                _ => TipoAtendimentoEnum.ProcedimentoComplexo,
+            };
+
+            Console.Write("\nInforme o valor cobrado: ");
+            var valorCobradoAgendamento = Helper.ValidadorDecimal();
+
+            Agendamento agendamento = new(paciente, consulta, opcaoTipoAtendimentoEnum, valorCobradoAgendamento);
+
+            agendamentos.Add(agendamento);
+
+            MensagemSucesso();
+            break;
+        case 20:
+            break;
+        case 21:
+            break;
+        case 22:
             break;
         default:
             Console.WriteLine("Sistema encerrado.");
@@ -275,6 +477,21 @@ Consulta ValidadorConsulta()
     var consulta = consultas.FirstOrDefault(x => x.Id.Equals(idConsulta));
 
     return consulta;
+}
+
+Paciente ValidadorPaciente()
+{
+    if (Helper.ValidadorListaVazia(pacientes, "Paciente"))
+        return null;
+
+    ListarItens(pacientes, "Paciente");
+
+    Console.Write("\nInforme o Id da paciente: ");
+    var idPaciente = Helper.ValidadorGuid();
+
+    var paciente = pacientes.FirstOrDefault(x => x.Id.Equals(idPaciente));
+
+    return paciente;
 }
 
 void Menu()
