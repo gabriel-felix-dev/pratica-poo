@@ -14,14 +14,13 @@ public class Consulta(string codigoUnico, LocalAtendimentoEnum localAtendimento,
 
     public void AlterarCodigoUnico(string codigoUnico) => CodigoUnico = codigoUnico;
 
-    public void AlterarMedico(Medico medico) => Medico = medico;
-
-    public void AlterarInformacoes(LocalAtendimentoEnum localAtendimento, DateTime dataHoraPrevista, int duracao, StatusConsultaEnum statusConsulta)
+    public void AlterarDados(LocalAtendimentoEnum localAtendimento, DateTime dataHoraPrevista, int duracao, StatusConsultaEnum statusConsulta, Medico medico)
     {
         LocalAtendimento = localAtendimento;
         DataHoraPrevista = dataHoraPrevista;
         Duracao = duracao;
         StatusConsulta = statusConsulta;
+        Medico = medico;
     }
 
     public override string ToString() => $"Id: {Id} | Código Consulta: {CodigoUnico} | Local de Atendimento: {LocalAtendimento} | Data e Hora Previstas: {DataHoraPrevista:d} | Duração: {Duracao} | Status da Consulta: {StatusConsulta} | Médico: {Medico.Nome}";

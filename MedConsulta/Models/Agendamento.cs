@@ -10,14 +10,13 @@ public class Agendamento(TipoAtendimentoEnum tipoAtendimento, decimal valorCobra
     public DateTime DataHoraConfirmacao { get; private set; } = dataHoraConfirmacao;
     public Paciente Paciente { get; private set; } = paciente;
 
-    public void AlterarDados(TipoAtendimentoEnum tipoAtendimento, decimal valorCobrado, DateTime dataHoraConfirmacao)
+    public void AlterarDados(TipoAtendimentoEnum tipoAtendimento, decimal valorCobrado, DateTime dataHoraConfirmacao, Paciente paciente)
     {
         TipoAtendimento = tipoAtendimento;
         ValorCobrado = valorCobrado;
         DataHoraConfirmacao = dataHoraConfirmacao;
+        Paciente = paciente;
     }
-
-    public void AlteracaoPaciente(Paciente paciente) => Paciente = paciente;
 
     public override string ToString() => $"Id: {Id} | Tipo de Atendimento: {TipoAtendimento} | Valor Cobrado: {ValorCobrado:c} | Data e Hora da Confirmação: {DataHoraConfirmacao:d} | Paciente: {Paciente.Nome}";
 }
