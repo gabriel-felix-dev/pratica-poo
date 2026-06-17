@@ -405,6 +405,20 @@ while (true)
                 continue;
             }
 
+            if (consulta.StatusConsulta.Equals(StatusConsultaEnum.Cancelada))
+            {
+                Console.WriteLine("A data da consulta não pode ser menor que hoje.");
+                ReduzirTempo();
+                continue;
+            }
+
+            if (agendamentos.Any(x => x.Consulta.Id.Equals(consulta.Id)))
+            {
+                Console.WriteLine("A consulta já possuí um agendamento.");
+                ReduzirTempo();
+                continue;
+            }
+
             paciente = ValidadorPaciente();
 
             if (Helper.ValidadorObjetoNulo(paciente))
@@ -523,14 +537,52 @@ while (true)
             // -> Detalhar a quantidade por tipo de atendimento
             // -> Ordenar os grupos em ordem decrescente de quantidade de pacientes
 
-            consulta = ValidadorConsulta();
-
-            if (Helper.ValidadorObjetoNulo(consulta))
+            if (Helper.ValidadorListaVazia(consultas, "Consulta"))
                 continue;
 
-            var listaPacientesAgendados = agendamentos.Where(x => x.Consulta.Id.Equals(consulta.Id))
+            ListarItens(consultas, "Consulta");
+
+            Console.Write("\nInforme o código único da consulta desejada: ");
+            var codicoConsulta = Helper.ValidadorNumeroConsulta();
+
+            consulta = consultas.FirstOrDefault(x => x.CodigoUnico.Equals(codicoConsulta));
+
+            if (consulta == null)
+            {
+                Console.WriteLine("\nConsulta não encontra.");
+                ReduzirTempo();
+                continue;
+            }
+
+            var listaPacientesAgendados = agendamentos.Where(x => x.Consulta.CodigoUnico.Equals(consulta.CodigoUnico))
                                                       .ToList();
 
+            if (listaPacientesAgendados.Count == 0)
+            {
+                Console.WriteLine("\nEsta consulta não possui pacientes agendados.");
+                ReduzirTempo();
+                continue;
+            }
+
+            // 1) Quantidade total de pacientes agendados
+            Console.WriteLine($"\nConsulta {consulta.CodigoUnico} - Total de pacientes agendados: {listaPacientesAgendados.Count}\n");
+
+            // 2) Agrupar por tipo de atendimento e 3) ordenar decrescente pela quantidade
+            var ranking = listaPacientesAgendados
+                .GroupBy(x => x.TipoAtendimento)
+                .Select(x => new { TipoAtendimento = x.Key, Quantidade = x.Count() })
+                .OrderByDescending(x => x.Quantidade)
+                .ToList();
+
+            Console.WriteLine("Ranking por tipo de atendimento:\n");
+            var posicaoRanking = 1;
+            foreach (var grupo in ranking)
+            {
+                Console.WriteLine($"{posicaoRanking}º - {grupo.TipoAtendimento}: {grupo.Quantidade} paciente(s)");
+                posicaoRanking++;
+            }
+
+            ReduzirTempo();
             break;
         case 24:
             Console.WriteLine("24 - Histórico de Consultas por Paciente\n");
