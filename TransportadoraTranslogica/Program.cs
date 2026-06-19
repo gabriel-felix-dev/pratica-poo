@@ -53,7 +53,7 @@ void MenuCliente()
 
     Console.WriteLine("\n#### - Menu Cliente - ####");
 
-    Console.WriteLine("\nEscolha uma opção: \n1 - Cadastro de Clientes \n2 - Listar Clientes \n3 - Alterar dados do Cliente \n4 - Alterar do Documento Cliente \n5 - Deletar Cliente \n\n0 - Voltar");
+    Console.WriteLine("\nEscolha uma opção: \n\n1 - Cadastro de Clientes \n2 - Listar Clientes \n3 - Alterar dados do Cliente \n4 - Alterar do Documento Cliente \n5 - Deletar Cliente \n\n0 - Voltar");
 
     Console.Write("\nDigite a opção desejada: ");
 
@@ -77,7 +77,7 @@ void MenuCliente()
                 return;
             }
 
-            Console.Write("\nInforme o telefone do cliente (11 dígitos e com o 9): ");
+            Console.Write("\nInforme o telefone do cliente (apenas dígitos - DDD912345678): ");
             var telefoneCliente = Helper.ValidadorTelefone();
 
             Cliente cliente = new(nomeCliente, telefoneCliente, documentoCliente);
@@ -191,7 +191,7 @@ void MenuCarga()
 
     Console.WriteLine("\n#### - Menu Carga - ####");
 
-    Console.WriteLine("\nEscolha uma opção: \n1 - Cadastro de Carga \n2 - Listar Cargas \n3 - Alterar dados de Carga \n4 - Alterar Código da Carga \n5 - Deletar Carga \n\n0 - Voltar");
+    Console.WriteLine("\nEscolha uma opção: \n\n1 - Cadastro de Carga \n2 - Listar Cargas \n3 - Alterar dados de Carga \n4 - Alterar Código da Carga \n5 - Deletar Carga \n\n0 - Voltar");
 
     Console.Write("\nDigite a opção desejada: ");
 
@@ -284,7 +284,7 @@ void MenuCarga()
                     ImprimirLista(cargaPadroes, "cargas padrões");
 
                     Console.Write("\nDigite qualquer tecla para sair: ");
-                    var teclaSaida = Helper.ValidadorTexto();
+                    var teclaSaida = Console.ReadLine();
 
                     if (teclaSaida != null)
                         resultadoContinuo = false;
@@ -303,7 +303,7 @@ void MenuCarga()
                     ImprimirLista(cargasFrageis, "cargas frágeis");
 
                     Console.Write("\nDigite qualquer tecla para sair: ");
-                    var teclaSaida = Helper.ValidadorTexto();
+                    var teclaSaida = Console.ReadLine();
 
                     if (teclaSaida != null)
                         resultadoContinuo = false;
@@ -322,7 +322,7 @@ void MenuCarga()
                     ImprimirLista(cargaPerigosas, "cargas perigosas");
 
                     Console.Write("\nDigite qualquer tecla para sair: ");
-                    var teclaSaida = Helper.ValidadorTexto();
+                    var teclaSaida = Console.ReadLine();
 
                     if (teclaSaida != null)
                         resultadoContinuo = false;
@@ -615,7 +615,7 @@ void MenuFuncionalidades()
                 resultadoBusca.ForEach(x => Console.WriteLine($"# - {x}"));
 
                 Console.Write("\nDigite qualquer tecla para sair: ");
-                var teclaSaida = Helper.ValidadorTexto();
+                var teclaSaida = Console.ReadLine();
 
                 if (teclaSaida != null)
                     resultadoContinuo = false;
@@ -645,7 +645,7 @@ void MenuFuncionalidades()
                 resultadoBusca.ForEach(x => Console.WriteLine($"# - {x}"));
 
                 Console.Write("\nDigite qualquer tecla para sair: ");
-                var teclaSaida = Helper.ValidadorTexto();
+                var teclaSaida = Console.ReadLine();
 
                 if (teclaSaida != null)
                     resultadoContinuo = false;
@@ -674,7 +674,7 @@ void MenuFuncionalidades()
                 relatorioCargas.ForEach(y => Console.WriteLine($"# - Código: {y.CodigoIdentificacao} | Tipo Carga: {(cargaPadroes.Any(x => x.CodigoIdentificacao == y.CodigoIdentificacao) ? "Carga Padrão" : (cargasFrageis.Any(x => x.CodigoIdentificacao == y.CodigoIdentificacao) ? "Carga Frágil" : (cargaPerigosas.Any(x => x.CodigoIdentificacao == y.CodigoIdentificacao) ? "Carga Perigoso" : "")))}| Cliente: {y.Cliente} | Frete: {y.Frete:c}"));
 
                 Console.Write("\nDigite qualquer tecla para sair: ");
-                var teclaSaida = Helper.ValidadorTexto();
+                var teclaSaida = Console.ReadLine();
 
                 if (teclaSaida != null)
                     resultadoContinuo = false;
@@ -727,7 +727,7 @@ void MenuFuncionalidades()
                 resultadoBuscaCarCliente.ForEach(x => Console.Write($"# - {x} \n\n"));
 
                 Console.Write("\nDigite qualquer tecla para sair: ");
-                var teclaSaida = Helper.ValidadorTexto();
+                var teclaSaida = Console.ReadLine();
 
                 if (teclaSaida != null)
                     resultadoContinuo = false;
@@ -767,7 +767,7 @@ void MenuFuncionalidades()
                 resultadoRastreamento.ForEach(x => Console.Write($"# - Código: {x.CodigoIdentificacao} | Rastreio: {x.CodigoRastreio} | {x.Instrucoes} \n\n"));
 
                 Console.Write("\nDigite qualquer tecla para sair: ");
-                var teclaSaida = Helper.ValidadorTexto();
+                var teclaSaida = Console.ReadLine();
 
                 if (teclaSaida != null)
                     resultadoContinuo = false;

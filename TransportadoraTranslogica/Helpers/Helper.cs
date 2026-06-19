@@ -19,9 +19,9 @@ public static class Helper
     {
         string telefone = Console.ReadLine().Trim();
 
-        while (string.IsNullOrWhiteSpace(telefone) || telefone.Length != 11 || !telefone.All(char.IsDigit) || !telefone.Substring(2, 1).Equals("9"))
+        while (string.IsNullOrWhiteSpace(telefone) || telefone.Length != 11 || !telefone.Substring(2, 1).Equals("9") || !telefone.All(char.IsDigit))
         {
-            Console.Write("\nNúmero de telefone inválido, digite novamente (apenas números, 11 dígitos com o 9 após o DDD): ");
+            Console.Write("\nNúmero de telefone inválido, digite novamente (apenas dígitos - DDD912345678): ");
             telefone = Console.ReadLine().Trim();
         }
 

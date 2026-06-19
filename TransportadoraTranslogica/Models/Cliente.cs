@@ -15,5 +15,5 @@ public class Cliente(string nome, string telefone, string documento)
 
     public void AlterarDocumento(string documento) => Documento = documento;
 
-    public override string ToString() => $"Id: {Id} | Cliente: {Nome} | {(Documento.Length == 14 ? "CNPJ" : "CPF")}: {Documento} | Telefone: {Telefone}";
+    public override string ToString() => $"Id: {Id} | Cliente: {Nome} | {(Documento.Length == 14 ? "CNPJ" : "CPF")}: {(Documento.Length == 14 ? $"{Documento.Substring(0, 2)}.{Documento.Substring(2, 3)}.{Documento.Substring(5, 3)}/{Documento.Substring(7, 4)}-{Documento.Substring(12, 2)}" : $"{Documento.Substring(0, 3)}.{Documento.Substring(3, 3)}.{Documento.Substring(6, 3)}-{Documento.Substring(9, 2)}")} | Telefone: ({Telefone.Substring(0, 2)}) {Telefone.Substring(2, 1)} {Telefone.Substring(3, 4)}-{Telefone.Substring(7, 4)}";
 }
